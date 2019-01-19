@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 
 
 public class Main extends Application {
+	private static int fieldMatrix[][] = new int[3][3];
+	private static int turn = 0;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -29,8 +31,27 @@ public class Main extends Application {
 	}
 	
 	public static int getTurn() {
-		int turn = 0;
 		return turn;
 	}
 	
+	public static int[][] getMatrix(){
+		return fieldMatrix;
+	}
+	//0 means cross turn -> Matrix with 1
+	//1 means circle turn -> Matrix with 2
+	public static void update(int row, int column, int currentTurn) {
+		
+		if(currentTurn==0) {
+			turn = 1;
+			fieldMatrix[row][column] = 1;
+		}
+		else {
+			turn = 0;
+			fieldMatrix[row][column] = 2;
+		}
+	}
+	
+	public static void resetLogic() {
+		fieldMatrix = new int[3][3];
+	}
 }
