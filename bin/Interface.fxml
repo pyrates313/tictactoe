@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -54,5 +55,6 @@
          </image>
       </ImageView>
       <Button fx:id="reset_button" layoutX="190.0" layoutY="372.0" mnemonicParsing="false" onAction="#resetField" text="Reset" />
+      <Text fx:id="turn_text" layoutX="511.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current turn: PLAYER1" />
    </children>
 </AnchorPane>
