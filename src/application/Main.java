@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 public class Main extends Application {
 	private static int fieldMatrix[][] = new int[3][3];
 	private static int turn = 0;
+	private static final int cross = 0;
+	private static final int circle = 1;
 	public static int winner = 0;
 	@Override
 	public void start(Stage primaryStage) {
@@ -42,12 +44,12 @@ public class Main extends Application {
 	//1 means circle turn -> Matrix with 2
 	public static int update(int row, int column, int currentTurn) {
 		//update turn and matrix	
-		if(currentTurn==0) {
-			turn = 1;
+		if(currentTurn==cross) {
+			turn = circle;
 			fieldMatrix[row][column] = 1;
 		}
-		else if(currentTurn==1) {
-			turn = 0;
+		else if(currentTurn==circle) {
+			turn = cross;
 			fieldMatrix[row][column] = 2;
 		}
 		//check if the game has ended
@@ -56,6 +58,7 @@ public class Main extends Application {
 			return winner;
 			
 		}
+		//standard return if game is not done
 		return 0;
 	}
 	

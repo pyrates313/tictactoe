@@ -56,5 +56,23 @@
       </ImageView>
       <Button fx:id="reset_button" layoutX="190.0" layoutY="372.0" mnemonicParsing="false" onAction="#resetField" text="Reset" />
       <Text fx:id="turn_text" layoutX="511.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current turn: PLAYER1" />
+      <MenuBar prefHeight="25.0" prefWidth="1022.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Set Names">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Player 1">
+                     <graphic>
+                        <TextField fx:id="p1_name" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Player 2">
+                     <graphic>
+                        <TextField fx:id="p2_name" />
+                     </graphic>
+                  </MenuItem>
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>
