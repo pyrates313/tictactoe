@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 public class Main extends Application {
 	private static int fieldMatrix[][] = new int[3][3];
 	private static int turn = 0;
+	public static int winner = 0;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -39,7 +40,7 @@ public class Main extends Application {
 	}
 	//0 means cross turn -> Matrix with 1
 	//1 means circle turn -> Matrix with 2
-	public static void update(int row, int column, int currentTurn) {
+	public static int update(int row, int column, int currentTurn) {
 		//update turn and matrix	
 		if(currentTurn==0) {
 			turn = 1;
@@ -51,9 +52,11 @@ public class Main extends Application {
 		}
 		//check if the game has ended
 		if(gameDone()) {
-			System.out.println("The game is over");
-			//InterfaceController.resetField();
+			//whenever a game is done, can return 1 for p1 wins, 2 for p2 wins, 3 for field full - noone wins
+			return winner;
+			
 		}
+		return 0;
 	}
 	
 	public static boolean gameDone(){
@@ -69,11 +72,12 @@ public class Main extends Application {
 		}
 		
 		if(zeroCount == 0) { //no 0's -> All fields have been filled out, game over
+			winner = checkWin();
 			done = true;
 		}
 		
 		else { //check if a wincondition happened for either player
-			int winner = checkWin();
+			winner = checkWin();
 			if(winner==1 || winner==2) {
 				done = true;
 			}
@@ -82,32 +86,34 @@ public class Main extends Application {
 	}
 	
 	public static int checkWin() {
+		//returns 0 if noone won, game not done yet, 1 if player1 wins and 2 if player2
 		for (int x = 1; x <= 2; x++) {
 			for (int i = 0; i < fieldMatrix.length; i++) {
 				//check if a column win happened
 				if(fieldMatrix[i][0] == x && fieldMatrix[i][1] == x && fieldMatrix[i][2] == x) {
-					return 1;
+					return x;
 				}
 				//check if a row win happened
 				else if(fieldMatrix[0][i] == x && fieldMatrix[1][i] == x && fieldMatrix[2][i] == x) {
-					return 1;
+					return x;
 				}
 			}
 			//check if diagonal win happened
 			if(fieldMatrix[0][0] == x && fieldMatrix[1][1] == x && fieldMatrix[2][2] == x) {
-				return 1;
+				return x;
 			}
 			else if(fieldMatrix[0][2] == x && fieldMatrix[1][1] == x && fieldMatrix[2][0] == x) {
-				return 1;
+				return x;
 			}
 		}
 		
 		//if no win happened
-		return 0;
+		return 3;
 	}
 	
 	public static void resetLogic() {
 		fieldMatrix = new int[3][3];
-		turn=0;
+		turn = 0;
+		winner = 0;
 	}
 }
