@@ -15,10 +15,13 @@ import javafx.scene.text.Text;
 public class InterfaceController {
 	private static final int cross = 0;
 	private static final int circle = 1;
+	private static final int pvp = 0;
+	private static final int pvc = 1;
 	private int wincon = 0;
 	private String player1 = "PLAYER1";
 	private String player2 = "PLAYER2";
 	private String turnText = "Current turn:";
+	private int gamemode = pvp;
 	
 	@FXML
 	private TextField p1_name;
@@ -128,5 +131,15 @@ public class InterfaceController {
 		else {
 			turn_text.setText(text+" "+name);
 		}
+	}
+	
+	public void setGamemodePvP(ActionEvent event) {
+		gamemode = pvp;
+		resetField(null);
+	}
+	
+	public void setGamemodePvC(ActionEvent event) {
+		gamemode = pvc;
+		resetField(null);
 	}
 }

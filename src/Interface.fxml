@@ -72,6 +72,12 @@
                   </MenuItem>
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Game Mode">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#setGamemodePvP" text="vs. Player" />
+                  <MenuItem mnemonicParsing="false" onAction="#setGamemodePvC" text="vs. Computer" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
    </children>
