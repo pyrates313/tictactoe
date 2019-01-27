@@ -37,6 +37,11 @@ public class Main extends Application {
 		return turn;
 	}
 	
+	public static void invertTurn() {
+		//changes the current active player to the other, fix for turn after win
+		turn = (turn==cross)? circle : cross;
+	}
+	
 	public static int[][] getMatrix(){
 		return fieldMatrix;
 	}
