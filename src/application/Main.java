@@ -1,5 +1,7 @@
 package application;
 	
+import java.util.Random;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -123,5 +125,37 @@ public class Main extends Application {
 		fieldMatrix = new int[3][3];
 		turn = 0;
 		winner = 0;
+	}
+	
+	public static int[] calculateTurn() {
+		int[] randompair = calculateRandom();
+		fieldMatrix[randompair[0]][randompair[1]] = 2;
+		return randompair;
+	}
+	//calculates a random value pair that is used as the coordinates of the computers turn
+	//if field is already filled, move to the right until empty/start new row
+	public static int[] calculateRandom() {
+		int counter = 0;
+		int rowcounter = 0;
+		Random random = new Random();
+		int[] randompair = new int[2];
+		randompair[0] = random.nextInt(3);
+		randompair[1] = random.nextInt(3);
+		//counter to prevent infinite loop when error would occur
+		while(fieldMatrix[randompair[0]][randompair[1]]!=0 && counter <10) {
+			if(rowcounter == 3) {
+				rowcounter = 0;
+				randompair[1] = (randompair[1]+1)%3;
+			}
+			else {
+				randompair[0] = (randompair[0]+1)%3;
+			}
+			rowcounter++;
+			counter++;
+		}
+		if(fieldMatrix[randompair[0]][randompair[1]]!=0) {
+			throw new IllegalArgumentException("FieldMatrix must have empty spaces!");
+		}
+		return randompair;
 	}
 }

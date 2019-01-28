@@ -68,7 +68,7 @@ public class InterfaceController {
 		int idcolumn = Character.getNumericValue(((Node) event.getSource()).getId().charAt(2));
 		int turn = Main.getTurn(); //0 means cross, 1 means circle
 		//circle's turn (Player2)
-		if(turn==circle && fieldMatrix[idrow][idcolumn]==0 && wincon==0) {
+		if(turn==circle && fieldMatrix[idrow][idcolumn]==0 && wincon==0 && gamemode==pvp) {
 			Image image = new Image("file:tile_circle.png"); //sets the new image
 			//gets the current image that is clicked on and performs the desired action on it
 			((ImageView) event.getSource()).setImage(image);
@@ -77,6 +77,7 @@ public class InterfaceController {
 			updateTurnText(turnText, player1);
 			wincon = Main.update(idrow, idcolumn, turn);
 		}
+
 		//cross' turn (Player1)
 		else if(turn == cross && fieldMatrix[idrow][idcolumn]==0 && wincon==0) {
 			Image image = new Image("file:tile_cross.png"); //sets the new image
@@ -86,6 +87,25 @@ public class InterfaceController {
 			turnText = "Current turn:";
 			updateTurnText(turnText, player2);
 			wincon = Main.update(idrow, idcolumn, turn);
+			//simulate computer move
+			if(gamemode==pvc && wincon==0) {
+				Image circleImage = new Image("file:tile_circle.png");
+				int[] x = Main.calculateTurn();
+				String id = "i"+x[0]+x[1];
+				for(Node node: anchor.getChildren()) {
+					if(node instanceof ImageView) {
+						if(node.getId().equals(id)) {
+							((ImageView) node).setImage(circleImage);
+						}
+					}
+				}
+				Main.invertTurn();
+				String player = (Main.getTurn()==cross)? player1 : player2;
+				updateTurnText(turnText, player);
+				if(Main.gameDone()) {
+					wincon = Main.winner;
+				}
+			}
 		}
 		//check if game is done
 		if(wincon==3) {
@@ -96,7 +116,12 @@ public class InterfaceController {
 			//turn inverted to undo turnchange of update function, so namechange is correct
 			Main.invertTurn();
 			turnText = "Congratulations, wins!";
-			updateTurnText(turnText, player2);
+			if(gamemode==pvp) {
+				updateTurnText(turnText, player2);
+			}
+			else {
+				updateTurnText("You lost, better luck next time!", "");
+			}
 		}
 		else if(wincon==cross+1) {
 			//turn inverted to undo turnchange of update function, so namechange is correct
