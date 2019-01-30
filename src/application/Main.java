@@ -1,5 +1,8 @@
 package application;
 	
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import javafx.application.Application;
@@ -128,7 +131,16 @@ public class Main extends Application {
 	}
 	
 	public static int[] calculateTurn() {
-		int[] randompair = calculateRandom();
+		int[] randompair = new int[2];
+		List<Integer> pairs = getPairs(cross+1);
+		System.out.println(Arrays.toString(pairs.toArray()));
+		if(pairs.size()>0) {
+			randompair[0] = pairs.get(0);
+			randompair[1] = pairs.get(1);
+		}
+		else {
+			randompair = calculateRandom();
+		}
 		fieldMatrix[randompair[0]][randompair[1]] = 2;
 		return randompair;
 	}
@@ -157,5 +169,97 @@ public class Main extends Application {
 			throw new IllegalArgumentException("FieldMatrix must have empty spaces!");
 		}
 		return randompair;
+	}
+	
+	public static List<Integer> getPairs(int type) {
+		/*Pairs are if in a given row/column/diagonal 2 out of the 3 fields are occupied by the same type and the third is empty,
+		 * making it a potential win for the next turn. This function returns the position of the open field that is
+		 * critical for the win.
+		 */
+		List<Integer> pairs = new ArrayList<>();
+		int[] zeroPosition = {-1,-1};
+		int counter = 0;
+		//check all rows for potential winpairs
+		for (int i = 0; i < fieldMatrix.length; i++) {
+			for (int j = 0; j < fieldMatrix.length; j++) {
+				if(fieldMatrix[i][j]==type) {
+					counter++;
+				}
+				else if(fieldMatrix[i][j]==0) {
+					zeroPosition[0]=i;
+					zeroPosition[1]=j;
+				}
+			}
+			if(counter==2 && zeroPosition[0]!=-1) {
+				for (int k = 0; k < 2; k++) {
+					pairs.add(zeroPosition[k]);
+				}
+			}
+			//reset pairspecific variables
+			counter = 0;
+			zeroPosition[0] = -1;
+			zeroPosition[1] = -1;
+		}
+		//check all columns for potential winpairs
+		for (int j = 0; j < fieldMatrix.length; j++) {
+			for (int i = 0; i < fieldMatrix.length; i++) {
+				if(fieldMatrix[i][j]==type) {
+					counter++;
+				}
+				else if(fieldMatrix[i][j]==0) {
+					zeroPosition[0]=i;
+					zeroPosition[1]=j;
+				}
+			}
+			if(counter==2 && zeroPosition[0]!=-1) {
+				for (int k = 0; k < 2; k++) {
+					pairs.add(zeroPosition[k]);
+				}
+			}
+			//reset pairspecific variables
+			counter = 0;
+			zeroPosition[0] = -1;
+			zeroPosition[1] = -1;
+		}
+		//test for potential diagonal downright winpair
+		for (int i = 0; i < fieldMatrix.length; i++) {
+			if(fieldMatrix[i][i]==type) {
+				counter++;
+			}
+			else if(fieldMatrix[i][i]==0) {
+				zeroPosition[0]=i;
+				zeroPosition[1]=i;
+			}
+		}
+		if(counter==2 && zeroPosition[0]!=-1) {
+			for (int k = 0; k < 2; k++) {
+				pairs.add(zeroPosition[k]);
+			}
+		}
+		//reset pairspecific variables
+		counter = 0;
+		zeroPosition[0] = -1;
+		zeroPosition[1] = -1;
+		//test for potential diagonal upright winpair
+		for (int i = 0; i < fieldMatrix.length; i++) {
+			if(fieldMatrix[i][fieldMatrix.length-1-i]==type) {
+				counter++;
+			}
+			else if(fieldMatrix[i][fieldMatrix.length-1-i]==0) {
+				zeroPosition[0]=i;
+				zeroPosition[1]=fieldMatrix.length-1-i;
+			}
+		}
+		if(counter==2 && zeroPosition[0]!=-1) {
+			for (int k = 0; k < 2; k++) {
+				pairs.add(zeroPosition[k]);
+			}
+		}
+		//reset pairspecific variables
+		counter = 0;
+		zeroPosition[0] = -1;
+		zeroPosition[1] = -1;
+		
+		return pairs;
 	}
 }
