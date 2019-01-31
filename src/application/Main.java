@@ -19,7 +19,10 @@ public class Main extends Application {
 	private static final int cross = 0;
 	private static final int circle = 1;
 	public static int winner = 0;
-	public static int difficulty = 0;
+	public static int difficulty = 1;
+	public static int rotation = 5;
+	public static int starter = 0;
+	public static int lastMove = 0;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -129,9 +132,12 @@ public class Main extends Application {
 		fieldMatrix = new int[3][3];
 		turn = 0;
 		winner = 0;
+		starter = 0;
+		rotation = 5;
+		lastMove = 0;
 	}
 	
-	public static int[] calculateTurn() {
+	public static int[] calculateTurn(int row, int column) {
 		/*calculates the computers turn. Easy will check if the computer (circle) or the player is on an immediate win
 		 * (2 out of 3 placed) and block that, or just complete to win itself.
 		 * Hard uses the mathematical strategies to deliver an optimal game without any random placements.
@@ -161,7 +167,7 @@ public class Main extends Application {
 		}
 		//hard difficulty
 		if(difficulty == 1) {
-			
+			randompair = optimalSolution(row, column);
 		}
 		//updating Matrix and returning the coordinates
 		fieldMatrix[randompair[0]][randompair[1]] = 2;
@@ -284,5 +290,51 @@ public class Main extends Application {
 		zeroPosition[1] = -1;
 		
 		return pairs;
+	}
+	
+	//runs through the optimal strategy and returns it
+	public static int[] optimalSolution(int row, int column) {
+		int currentField = 0;
+		int[] coordinates = new int[2];
+		int loopCounter = 0;
+		fieldPair pair = new fieldPair(row, column);
+		//System.out.println(pair.getField());
+		if(rotation==5) {
+			//initial if to determine rotation of strategy
+			while(!checkStartingValues(pair) && loopCounter<5) {
+				pair.rotateField();
+			}
+			
+			if(loopCounter == 5) {
+				throw new IllegalArgumentException("Rotation contained errors.");
+			}
+			rotation = pair.getRotator();
+			starter = pair.getField();
+			if(starter == 1 || starter == 2) {
+				currentField = 5;
+			}
+			else if(starter == 5) {
+				currentField = 1;
+			}
+			return pair.getCoordinates(currentField);
+		}
+		else {
+			for (int i = 0; i < rotation; i++) {
+				pair.rotateField();
+			}
+		}
+		
+		
+		
+		return coordinates;
+	}
+	
+	public static boolean checkStartingValues(fieldPair pair) {
+		//looks that we always get the case of a midvalue, top left corner or topright corner to start with
+		int field = pair.getField();
+		if(field==1 || field==2 || field==5) {
+			return true;
+		}
+		return false;
 	}
 }

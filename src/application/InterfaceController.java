@@ -90,7 +90,7 @@ public class InterfaceController {
 			//simulate computer move
 			if(gamemode==pvc && wincon==0) {
 				Image circleImage = new Image("file:tile_circle.png");
-				int[] x = Main.calculateTurn();
+				int[] x = Main.calculateTurn(idrow, idcolumn);
 				String id = "i"+x[0]+x[1];
 				for(Node node: anchor.getChildren()) {
 					if(node instanceof ImageView) {
