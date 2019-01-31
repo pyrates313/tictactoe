@@ -19,6 +19,7 @@ public class Main extends Application {
 	private static final int cross = 0;
 	private static final int circle = 1;
 	public static int winner = 0;
+	public static int difficulty = 0;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -131,16 +132,38 @@ public class Main extends Application {
 	}
 	
 	public static int[] calculateTurn() {
+		/*calculates the computers turn. Easy will check if the computer (circle) or the player is on an immediate win
+		 * (2 out of 3 placed) and block that, or just complete to win itself.
+		 * Hard uses the mathematical strategies to deliver an optimal game without any random placements.
+		 */
 		int[] randompair = new int[2];
-		List<Integer> pairs = getPairs(cross+1);
-		System.out.println(Arrays.toString(pairs.toArray()));
-		if(pairs.size()>0) {
-			randompair[0] = pairs.get(0);
-			randompair[1] = pairs.get(1);
+		//easy difficulty
+		if(difficulty == 0) {
+			//pairs of enemy
+			List<Integer> pairs = getPairs(cross+1);
+			List<Integer> circlePairs = getPairs(circle+1);
+			//prints the possible winpositions present
+			//System.out.println(Arrays.toString(pairs.toArray()));
+			//check if computer could win, if so assign those values
+			if(circlePairs.size()>0) {
+				randompair[0] = circlePairs.get(0);
+				randompair[1] = circlePairs.get(1);
+			}
+			else if(pairs.size()>0) {
+				//assigns the first wincondition to our pair that is placed by the computer
+				randompair[0] = pairs.get(0);
+				randompair[1] = pairs.get(1);
+			}
+			else {
+				//if no enemy turn is to be blocked, the computer just calculates a random postition to fill
+				randompair = calculateRandom();
+			}
 		}
-		else {
-			randompair = calculateRandom();
+		//hard difficulty
+		if(difficulty == 1) {
+			
 		}
+		//updating Matrix and returning the coordinates
 		fieldMatrix[randompair[0]][randompair[1]] = 2;
 		return randompair;
 	}
