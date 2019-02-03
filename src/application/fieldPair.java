@@ -21,12 +21,12 @@ public class fieldPair {
 	public fieldPair(int x, int y) {
 		corners.add(1);
 		corners.add(3);
-		corners.add(7);
 		corners.add(9);
+		corners.add(7);
 		edges.add(2);
-		edges.add(4);
 		edges.add(6);
 		edges.add(8);
+		edges.add(4);
 		this.x = x;
 		this.y = y;
 		this.field = (x*3)+y+1;

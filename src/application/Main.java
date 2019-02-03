@@ -23,6 +23,7 @@ public class Main extends Application {
 	public static int rotation = 5;
 	public static int starter = 0;
 	public static int lastMove = 0;
+	public static int debug = 1;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -204,6 +205,7 @@ public class Main extends Application {
 		/*Pairs are if in a given row/column/diagonal 2 out of the 3 fields are occupied by the same type and the third is empty,
 		 * making it a potential win for the next turn. This function returns the position of the open field that is
 		 * critical for the win.
+		 * Takes as input circle+1 or cross+1
 		 */
 		List<Integer> pairs = new ArrayList<>();
 		int[] zeroPosition = {-1,-1};
@@ -300,6 +302,7 @@ public class Main extends Application {
 		fieldPair pair = new fieldPair(row, column);
 		//System.out.println(pair.getField());
 		if(rotation==5) {
+			if(debug==1) {System.out.println("initial");}
 			//initial if to determine rotation of strategy
 			while(!checkStartingValues(pair) && loopCounter<5) {
 				pair.rotateField();
@@ -316,12 +319,130 @@ public class Main extends Application {
 			else if(starter == 5) {
 				currentField = 1;
 			}
+			//saves last circle move
+			lastMove = currentField;
 			return pair.getCoordinates(currentField);
 		}
 		else {
 			for (int i = 0; i < rotation; i++) {
 				pair.rotateField();
 			}
+			List<Integer> l = getPairs(circle+1);
+			if(!l.isEmpty()) {
+				//checks if circle could win with one move, if so, do it.
+				if(debug==1) {System.out.println("circlewin");}
+				coordinates[0] = l.get(0);
+				coordinates[1] = l.get(1);
+				//updating lastMove
+				fieldPair tempPair = new fieldPair(coordinates[0], coordinates[1]);
+				lastMove = tempPair.getField();
+				return coordinates;
+			}
+			l = getPairs(cross+1);
+			if(!l.isEmpty()) {
+				if(debug==1) {System.out.println("crosswin");}
+				//checks if cross could win with one move, if so, stop it.
+				coordinates[0] = l.get(0);
+				coordinates[1] = l.get(1);
+				//updating lastMove
+				fieldPair tempPair = new fieldPair(coordinates[0], coordinates[1]);
+				lastMove = tempPair.getField();
+				return coordinates;
+			}
+			//if none of the above happens, go further with tactical decision, case x starts in corner
+			//current cross field
+			int current = pair.getField();
+			if(starter == 1) {
+				if(debug==1) {System.out.println("c1");}
+				if(current==9 && lastMove==5) {
+					if(debug==1) {System.out.println("c1-lm5-cur9");}
+					currentField = 2;
+					lastMove = currentField;
+					currentField = pair.rotateBack(currentField);
+					return pair.getCoordinates(currentField);
+				}
+				if((current==6 || current==8) && lastMove==5) {
+					if(debug==1) {System.out.println("c1-lm5-cur6|8");}
+					currentField = 9;
+					lastMove = currentField;
+					currentField = pair.rotateBack(currentField);
+					return pair.getCoordinates(currentField);
+				}
+				else {
+					/* game can result in draw only with randomplacement of circle,
+					 * which happens if no pairs are detected from cross or circle, as they have priority.
+					 */
+					if(debug==1) {System.out.println("c1-rnd");}
+					coordinates = calculateRandom();
+					//updating lastMove
+					fieldPair tempPair = new fieldPair(coordinates[0], coordinates[1]);
+					lastMove = tempPair.getField();
+					return coordinates;
+				}
+			}
+			//case x starts in middle
+			if(starter == 5) {
+				if(debug==1) {System.out.println("c5");}
+				if(lastMove == 1) {
+					if(debug==1) {System.out.println("c5-lm1");}
+					currentField = 3;
+					lastMove = currentField;
+					currentField = pair.rotateBack(currentField);
+					return pair.getCoordinates(currentField);
+				}
+				else {
+					if(debug==1) {System.out.println("c5-rnd");}
+					coordinates = calculateRandom();
+					fieldPair tempPair = new fieldPair(coordinates[0], coordinates[1]);
+					lastMove = tempPair.getField();
+					return coordinates;
+				}
+			}
+			//case x starts at a side
+			if(starter == 2) {
+				if(debug==1) {System.out.println("c2");}
+				if(lastMove==5 && (current==4 || current==6)) {
+					if(current == 4) {
+						if(debug==1) {System.out.println("c2-lm5-cur4");}
+						currentField = 1;
+						lastMove = currentField;
+						currentField = pair.rotateBack(currentField);
+						return pair.getCoordinates(currentField);
+					}
+					else if(current == 6) {
+						if(debug==1) {System.out.println("c2-lm5-cur6");}
+						currentField = 3;
+						lastMove = currentField;
+						currentField = pair.rotateBack(currentField);
+						return pair.getCoordinates(currentField);
+					}
+				}
+				else if(lastMove==5 && (current==7 || current==9)) {
+					if(current == 7) {
+						if(debug==1) {System.out.println("c2-lm5-cur7");}
+						currentField = 1;
+						lastMove = currentField;
+						currentField = pair.rotateBack(currentField);
+						return pair.getCoordinates(currentField);
+						
+					}
+					else if(current == 9) {
+						if(debug==1) {System.out.println("c2-lm5-cur9");}
+						currentField = 3;
+						lastMove = currentField;
+						currentField = pair.rotateBack(currentField);
+						return pair.getCoordinates(currentField);
+					}
+				}
+				else {
+					if(debug==1) {System.out.println("c2-lm5-rnd");}
+					coordinates = calculateRandom();
+					fieldPair tempPair = new fieldPair(coordinates[0], coordinates[1]);
+					lastMove = tempPair.getField();
+					return coordinates;
+				}
+			}
+
 		}
 		
 		
