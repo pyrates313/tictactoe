@@ -13,8 +13,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -83,14 +83,14 @@ public class InterfaceController {
 	}
 	
 	@FXML //needed to be recognized by fxml file
-	private void fieldImageAction(MouseEvent event) {
+	public void fieldImageAction(MouseEvent event) {
 		int[][] fieldMatrix = Main.getMatrix();
 		int idrow = Character.getNumericValue(((Node) event.getSource()).getId().charAt(1));
 		int idcolumn = Character.getNumericValue(((Node) event.getSource()).getId().charAt(2));
 		int turn = Main.getTurn(); //0 means cross, 1 means circle
 		//circle's turn (Player2)
 		if(turn==circle && fieldMatrix[idrow][idcolumn]==0 && wincon==0 && gamemode==pvp) {
-			Image image = new Image("file:tile_circle.png"); //sets the new image
+			Image image = new Image(this.getClass().getResourceAsStream("/res/tile_circle.png")); //sets the new image
 			//gets the current image that is clicked on and performs the desired action on it
 			((ImageView) event.getSource()).setImage(image);
 			//update current turn indicator to next player
@@ -101,7 +101,7 @@ public class InterfaceController {
 
 		//cross' turn (Player1)
 		else if(turn == cross && fieldMatrix[idrow][idcolumn]==0 && wincon==0) {
-			Image image = new Image("file:tile_cross.png"); //sets the new image
+			Image image = new Image(this.getClass().getResourceAsStream("/res/tile_cross.png")); //sets the new image
 			//gets the current image that is clicked on and performs the desired action on it
 			((ImageView) event.getSource()).setImage(image);
 			//update current turn indicator to next player
@@ -110,7 +110,7 @@ public class InterfaceController {
 			wincon = Main.update(idrow, idcolumn, turn);
 			//simulate computer move
 			if(gamemode==pvc && wincon==0) {
-				Image circleImage = new Image("file:tile_circle.png");
+				Image circleImage = new Image(this.getClass().getResourceAsStream("/res/tile_circle.png"));
 				int[] x = Main.calculateTurn(idrow, idcolumn);
 				String id = "i"+x[0]+x[1];
 				for(Node node: anchor.getChildren()) {
@@ -157,7 +157,8 @@ public class InterfaceController {
 		wincon = 0;
 		turnText = "Current turn:";
 		updateTurnText(turnText, player1);
-		Image resimg = new Image("file:tile.png");
+		Image resimg = new Image(this.getClass().getResourceAsStream("/res/tile.png"));
+		//Image resimg = new Image("file:src/application/tile.png");
 		for(Node node : anchor.getChildren()) {
 			if(node instanceof ImageView) {
 				((ImageView) node).setImage(resimg);

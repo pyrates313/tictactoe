@@ -11,47 +11,47 @@
    <children>
       <ImageView fx:id="i00" fitHeight="60.0" fitWidth="60.0" layoutX="190.0" layoutY="130.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
       <ImageView fx:id="i01" fitHeight="60.0" fitWidth="60.0" layoutX="260.0" layoutY="130.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
       <ImageView fx:id="i02" fitHeight="60.0" fitWidth="60.0" layoutX="330.0" layoutY="130.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
             <ImageView fx:id="i10" fitHeight="60.0" fitWidth="60.0" layoutX="190.0" layoutY="200.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
       <ImageView fx:id="i11" fitHeight="60.0" fitWidth="60.0" layoutX="260.0" layoutY="200.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
       <ImageView fx:id="i12" fitHeight="60.0" fitWidth="60.0" layoutX="330.0" layoutY="200.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
             <ImageView fx:id="i20" fitHeight="60.0" fitWidth="60.0" layoutX="190.0" layoutY="270.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
       <ImageView fx:id="i21" fitHeight="60.0" fitWidth="60.0" layoutX="260.0" layoutY="270.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
       <ImageView fx:id="i22" fitHeight="60.0" fitWidth="60.0" layoutX="330.0" layoutY="270.0" onMouseClicked="#fieldImageAction" pickOnBounds="true">
          <image>
-            <Image url="@../tile.png" />
+            <Image url="@res/tile.png" />
          </image>
       </ImageView>
       <Button fx:id="reset_button" layoutX="190.0" layoutY="372.0" mnemonicParsing="false" onAction="#resetField" text="Reset" />
