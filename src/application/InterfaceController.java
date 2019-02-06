@@ -13,6 +13,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputMethodEvent;
@@ -55,6 +56,10 @@ public class InterfaceController {
 	
 	@FXML
 	public void initialize() {
+		ToggleGroup group = new ToggleGroup();
+		b_easy.setToggleGroup(group);
+		b_medium.setToggleGroup(group);
+		b_hard.setToggleGroup(group);
 		p1_name.textProperty().addListener((obs, oldText, newText)->{
 			if(newText.length()==0) {
 				player1 = "PLAYER1";
@@ -204,14 +209,17 @@ public class InterfaceController {
 	
 	public void difficulty_easy() {
 		Main.difficulty = 0;
+		resetField(null);
 	}
 	
 	public void difficulty_medium() {
 		Main.difficulty = 1;
+		resetField(null);
 	}
 	
 	public void difficulty_hard() {
 		Main.difficulty = 2;
+		resetField(null);
 	}
 	
 	public void about_window() {
