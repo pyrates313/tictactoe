@@ -78,7 +78,14 @@
                   <MenuItem mnemonicParsing="false" onAction="#setGamemodePvC" text="vs. Computer" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#about_window" text="How to Play" />
+               </items></Menu>
         </menus>
       </MenuBar>
+      <ToggleButton fx:id="b_easy" layoutX="505.0" layoutY="165.0" mnemonicParsing="false" onAction="#difficulty_easy" text="Easy" />
+      <ToggleButton fx:id="b_medium" layoutX="555.0" layoutY="165.0" mnemonicParsing="false" onAction="#difficulty_medium" text="Medium" />
+      <ToggleButton fx:id="b_hard" layoutX="628.0" layoutY="165.0" mnemonicParsing="false" onAction="#difficulty_hard" text="Hard" />
    </children>
 </AnchorPane>

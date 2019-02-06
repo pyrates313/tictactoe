@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AboutController">
+   <children>
+      <Label fx:id="about_text" layoutX="13.0" layoutY="14.0" prefHeight="257.0" prefWidth="474.0" text="How To Play: There are two Gamemodes, PvP (Player versus Player) and PvC (Player versus Computer). &#10;In PvP Mode, the first Player is X and the second Player O. &#10;The goal is to get a horizontal/vertical/diagonal row of 3 of one's symbol in order to win. &#10;If all fields are filled out without that happening, the game ends in a draw. &#10;&#10;In PvC, the player plays against the computer. The player represents X and always goes first. &#10;&#10;Easy mode is for beginners, Medium is slightly challenging and Hard is for veterans of the game." wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
